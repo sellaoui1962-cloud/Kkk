@@ -20,15 +20,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Unzip and Initialize Repository
+      - name: Unzip and Build Projects
         run: |
           unzip NDR_Monorepo.zip
           cd NDR_Monorepo
-          git init
-          git config user.name "Sellaoui"
-          git config user.email "sellaoui1962@gmail.com"
-          git add .
-          git commit -m "NDR apps: First build"
-          git remote add origin https://github.com/sellaoui1962-cloud/kkk.git
-          git branch -M main
-          git push -u origin main
+          # بناء المشاريع وتوليد ملفات الـ APK
+          chmod +x gradlew || true
