@@ -23,9 +23,12 @@ jobs:
       - name: Unzip Monorepo and Build Apps
         run: |
           unzip -o NDR_Monorepo.zip
-          cd NDR_Monorepo
           
-          chmod +x NDRKeyboard/gradlew NDRRoomAssistant/gradlew NDRRoomJoiner/gradlew || true
+          # الانتقال تلقائياً إلى المجلد المفكوك
+          cd "$(find . -maxdepth 2 -type d -name "NDR_Monorepo" | head -n 1)" || cd .
+          
+          # منح صلاحيات التنفيذ لجميع ملفات Gradle
+          find . -name "gradlew" -exec chmod +x {} \;
           
           echo "Building NDRKeyboard..."
           cd NDRKeyboard
@@ -47,6 +50,6 @@ jobs:
         with:
           name: all-apks
           path: |
-            NDR_Monorepo/NDRKeyboard/app/build/outputs/apk/debug/*.apk
-            NDR_Monorepo/NDRRoomAssistant/app/build/outputs/apk/debug/*.apk
-            NDR_Monorepo/NDRRoomJoiner/app/build/outputs/apk/debug/*.apk
+            **/NDRKeyboard/app/build/outputs/apk/debug/*.apk
+            **/NDRRoomAssistant/app/build/outputs/apk/debug/*.apk
+            **/NDRRoomJoiner/app/build/outputs/apk/debug/*.apk
