@@ -25,6 +25,8 @@ jobs:
           unzip NDR_Monorepo.zip
           cd NDR_Monorepo
           git init
+          git config user.name "Sellaoui"
+          git config user.email "sellaoui1962@gmail.com"
           git add .
           git commit -m "NDR apps: First build"
           git remote add origin https://github.com/sellaoui1962-cloud/kkk.git
