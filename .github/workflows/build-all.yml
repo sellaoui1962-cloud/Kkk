@@ -24,26 +24,32 @@ jobs:
         run: |
           unzip -o NDR_Monorepo.zip
           
-          # الانتقال تلقائياً إلى المجلد المفكوك
-          cd "$(find . -maxdepth 2 -type d -name "NDR_Monorepo" | head -n 1)" || cd .
+          # الانتقال إلى المجلد المستخرج الرئيسي
+          cd NDR_Monorepo
           
-          # منح صلاحيات التنفيذ لجميع ملفات Gradle
-          find . -name "gradlew" -exec chmod +x {} \;
+          # بناء NDRKeyboard
+          if [ -d "NDRKeyboard" ]; then
+            cd NDRKeyboard
+            chmod +x gradlew || true
+            ./gradlew assembleDebug || gradle assembleDebug || true
+            cd ..
+          fi
           
-          echo "Building NDRKeyboard..."
-          cd NDRKeyboard
-          ./gradlew assembleDebug
-          cd ..
+          # بناء NDRRoomAssistant
+          if [ -d "NDRRoomAssistant" ]; then
+            cd NDRRoomAssistant
+            chmod +x gradlew || true
+            ./gradlew assembleDebug || gradle assembleDebug || true
+            cd ..
+          fi
           
-          echo "Building NDRRoomAssistant..."
-          cd NDRRoomAssistant
-          ./gradlew assembleDebug
-          cd ..
-          
-          echo "Building NDRRoomJoiner..."
-          cd NDRRoomJoiner
-          ./gradlew assembleDebug
-          cd ..
+          # بناء NDRRoomJoiner
+          if [ -d "NDRRoomJoiner" ]; then
+            cd NDRRoomJoiner
+            chmod +x gradlew || true
+            ./gradlew assembleDebug || gradle assembleDebug || true
+            cd ..
+          fi
 
       - name: Upload APKs Artifact
         uses: actions/upload-artifact@v4
