@@ -1,0 +1,8 @@
+unzip NDR_Monorepo.zip
+cd NDR_Monorepo
+git init
+git add .
+git commit -m "NDR apps: first build"
+git remote add origin https://github.com/sellaoui1962-cloud/Kkk.git
+git branch -M main
+git push -u origin main
