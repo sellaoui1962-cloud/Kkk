@@ -1,8 +1,32 @@
-unzip NDR_Monorepo.zip
-cd NDR_Monorepo
-git init
-git add .
-git commit -m "NDR apps: first build"
-git remote add origin https://github.com/sellaoui1962-cloud/Kkk.git
-git branch -M main
-git push -u origin main
+name: Build All
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Unzip and Initialize Repository
+        run: |
+          unzip NDR_Monorepo.zip
+          cd NDR_Monorepo
+          git init
+          git add .
+          git commit -m "NDR apps: First build"
+          git remote add origin https://github.com/sellaoui1962-cloud/kkk.git
+          git branch -M main
+          git push -u origin main
